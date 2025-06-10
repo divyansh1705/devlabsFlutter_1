@@ -1,22 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-void main(){
-  runApp(const myapp());
-}
-
-class myapp extends StatelessWidget{
-  const myapp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: registrationpage(),
-
-    );
-
-  }
-}
 
 
 class registrationpage extends StatelessWidget{
@@ -45,7 +29,7 @@ class registrationpage extends StatelessWidget{
                 ),
               ),
             Padding(
-              padding: EdgeInsetsGeometry.only(top: 10),
+              padding: EdgeInsets.only(top: 10),
               child: Text("Create new account",
                 style: TextStyle(
                   color: Colors.black,
