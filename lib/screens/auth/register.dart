@@ -78,6 +78,7 @@ class registrationpage extends StatelessWidget{
                 child: buttons(label: "Register")
               )
             ],
+            
           ),
       ))
     );
