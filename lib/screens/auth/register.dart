@@ -29,7 +29,7 @@ class registrationpage extends StatelessWidget{
                 ),
               ),
             Padding(
-              padding: EdgeInsetsGeometry.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: Text("Create new account",
                 style: TextStyle(
                   color: Colors.black,
@@ -82,6 +82,5 @@ class registrationpage extends StatelessWidget{
           ),
       ))
     );
-
   }
 }
