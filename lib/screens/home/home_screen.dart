@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -8,7 +7,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Menu',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.blue,
         useMaterial3: false,
       ),
       home: HomePage(),
@@ -20,22 +19,27 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void _showMessage(BuildContext context, String message){
-    Navigator.pop(context);
+  void _showMessage(BuildContext context, String message,{bool shouldPop = true}){
+    if(shouldPop) {
+      Navigator.pop(context);
+    }
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+        length: 3,
+    child: Scaffold(
       appBar: AppBar(
-        title: Text('Hamburger Menu'),
+        title: Text('Taskify',style: (TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
+        backgroundColor: Colors.blueAccent,
       ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
-            DrawerHeader(decoration: BoxDecoration(color: Colors.cyan),child: Align(
+            DrawerHeader(decoration: BoxDecoration(color: Colors.blueAccent),child: Align(
               alignment: Alignment.bottomLeft,
               child:Text('Welcome!',style: TextStyle(color: Colors.white,fontSize: 24),
               ) ,
@@ -66,11 +70,64 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Swipe From Left  or Tap the top-left icon to open the menu.',style: TextStyle(color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold),),
-      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "My Tasks",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16,),
+            Row(
+              children: [
+                OutlinedButton.icon(
+                    onPressed: ()=>_showMessage(context, 'Filter Clicked',shouldPop: false),
+                    icon:const Icon(Icons.filter_list),
+                    label: const Text("Filter",style: TextStyle(color: Colors.black),),
+                ),
+                const SizedBox(width: 8,),
+                OutlinedButton.icon(
+                  onPressed: ()=> _showMessage(context, 'Sort Clicked',shouldPop: false),
+                  icon: const Icon(Icons.sort),
+                  label: const Text("Sort",style: TextStyle(color: Colors.black)),
+                ),
+                SizedBox(width:8),
+                OutlinedButton.icon(
+                  onPressed: ()=> _showMessage(context, 'New Task Clicked',shouldPop: false),
+                  icon: const Icon(Icons.add),
+                  label: const Text("New Task",style: TextStyle(color: Colors.black)),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            TabBar(
+              labelColor: Colors.blue,
+              unselectedLabelColor: Colors.black,
+              indicatorColor: Colors.blue,
+              tabs: [
+                Tab(text: 'To Do'),
+                Tab(text: 'In Progress'),
+                Tab(text: 'Done'),
+              ],
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child:TabBarView(
+                children: [
+                  Center(child:Text('To Do tasks will appear here')),
+                  Center(child:Text('In Progress tasks will appear here')),
+                  Center(child:Text('Completed tasks will appear here')),
+                ],
+              )
+            )
+          ],
+        )
+      )
+    ),
     );
   }
 }
