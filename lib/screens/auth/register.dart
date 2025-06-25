@@ -1,11 +1,20 @@
 
 import 'package:flutter/material.dart';
+import 'password.dart';
 
 
-
-class registrationpage extends StatelessWidget{
+class registrationpage extends StatefulWidget{
    registrationpage({super.key});
 
+  @override
+  State<registrationpage> createState() => _registrationpageState();
+}
+
+class _registrationpageState extends State<registrationpage> {
+ 
+  final TextEditingController _passwordController = TextEditingController();
+  
+  
   @override
   Widget build(BuildContext context) {
 
@@ -58,17 +67,8 @@ class registrationpage extends StatelessWidget{
                   ),
                 ],
               ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Username",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(19)
-                  )
-                  
-                ),
-          
-
-              ),
+              PasswordField(
+                 controller: _passwordController, hint: 'Password'),
               Padding(
                 padding: const EdgeInsets.only(top:15),
                 child: TextField(
