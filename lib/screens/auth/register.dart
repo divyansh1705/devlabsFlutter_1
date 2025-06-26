@@ -2,19 +2,15 @@
 import 'package:flutter/material.dart';
 import 'password.dart';
 
-
-class registrationpage extends StatefulWidget{
-   registrationpage({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
 
   @override
-  State<registrationpage> createState() => _registrationpageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _registrationpageState extends State<registrationpage> {
- 
+class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _passwordController = TextEditingController();
-  
-  
   @override
   Widget build(BuildContext context) {
 
