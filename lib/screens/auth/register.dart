@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:devlabsflutter_1/widgets/custom_field.dart';
 import 'password.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
-
+  
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
@@ -34,7 +35,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               ),
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: Text("Create new account",
                 style: TextStyle(
                   color: Colors.black,
@@ -43,7 +44,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               
               ),
-              
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,67 +63,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ],
               ),
-              PasswordField(
+
+              
+
+              text_input_fields(label: "Username"),
+
+              Padding(
+                padding: const EdgeInsets.only(top:15),
+                child: 
+              text_input_fields(label: "Email"),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:15),
+                child: PasswordField(
                  controller: _passwordController, hint: 'Password'),
-              Padding(
-                padding: const EdgeInsets.only(top:15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(19)
-                    )
-                  ),
-                ),
+              
               ),
               Padding(
                 padding: const EdgeInsets.only(top:15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(19)
-                    )
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top:15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Confirm Password",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(19)
-                    )
-                  ),
-                ),
+                child: 
+              text_input_fields(label: "Confirm Password"),
               ),
               Padding(
                 padding: const EdgeInsets.only(top : 13),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: TextButton(onPressed: (){},
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(19),
-                      ),
-                  ),
-                
-                  child: Text("Register",style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500
-                  ),),
-                  
-                  ),
-                ),
+                child: buttons(label: "Register")
               )
             ],
+            
           ),
       ))
     );
-
   }
 }
