@@ -1,11 +1,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:devlabsflutter_1/widgets/custom_field.dart';
+import 'password.dart';
 
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+  
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
 
-class registrationpage extends StatelessWidget{
-   registrationpage({super.key});
-
+class _RegistrationPageState extends State<RegistrationPage> {
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -57,7 +63,11 @@ class registrationpage extends StatelessWidget{
                   ),
                 ],
               ),
+
+              
+
               text_input_fields(label: "Username"),
+
               Padding(
                 padding: const EdgeInsets.only(top:15),
                 child: 
@@ -65,8 +75,9 @@ class registrationpage extends StatelessWidget{
               ),
               Padding(
                 padding: const EdgeInsets.only(top:15),
-                child: 
-              text_input_fields(label: "Password"),
+                child: PasswordField(
+                 controller: _passwordController, hint: 'Password'),
+              
               ),
               Padding(
                 padding: const EdgeInsets.only(top:15),
