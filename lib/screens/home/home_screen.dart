@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:devlabsflutter_1/widgets/new_task_card.dart';
+import 'package:provider/provider.dart';
+import 'task_provider.dart';
+import 'package:devlabsflutter_1/widgets/note_card.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -126,9 +130,76 @@ class HomePage extends StatelessWidget {
             Expanded(
               child:TabBarView(
                 children: [
-                  Center(child:Text('To Do tasks will appear here')),
-                  Center(child:Text('In Progress tasks will appear here')),
-                  Center(child:Text('Completed tasks will appear here')),
+                  Consumer<TaskProvider>(
+                    builder: (context, taskProvider, child) {
+                      final toDoTasks = taskProvider.tasks
+                          .where((task) => task.status == 'To Do')
+                          .toList();
+
+                      if (toDoTasks.isEmpty) {
+                        return const Center(child: Text('No To Do tasks yet.'));
+                      }
+
+                      return ListView.builder(
+                        itemCount: toDoTasks.length,
+                        itemBuilder: (context, index) {
+                          final task = toDoTasks[index];
+                        return note_card(
+                          title: task.title,
+                          description: task.description,
+                          date: task.date, 
+                        );
+                        },
+                      );
+                    },
+                  ),
+
+                Consumer<TaskProvider>(
+                  builder: (context, taskProvider, child) {
+                    final inProgressTasks = taskProvider.tasks
+                        .where((task) => task.status == 'In Progress')
+                        .toList();
+
+                    if (inProgressTasks.isEmpty) {
+                      return const Center(child: Text('No In Progress tasks.'));
+                    }
+
+                    return ListView.builder(
+                      itemCount: inProgressTasks.length,
+                      itemBuilder: (context, index) {
+                        final task = inProgressTasks[index];
+                        return note_card(
+                          title: task.title,
+                          description: task.description,
+                          date: task.date, 
+                        );
+                      },
+                    );
+                  },
+                ),
+                Consumer<TaskProvider>(
+                  builder: (context, taskProvider, child) {
+                    final doneTasks = taskProvider.tasks
+                        .where((task) => task.status == 'Done')
+                        .toList();
+
+                    if (doneTasks.isEmpty) {
+                      return const Center(child: Text('No Done tasks yet.'));
+                    }
+
+                    return ListView.builder(
+                      itemCount: doneTasks.length,
+                      itemBuilder: (context, index) {
+                        final task = doneTasks[index];
+                        return note_card(
+                          title: task.title,
+                          description: task.description,
+                          date: task.date, 
+                        );
+                      },
+                    );
+                  },
+                ),
                 ],
               )
             )
