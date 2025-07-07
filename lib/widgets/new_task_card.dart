@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'custom_field.dart';
+import 'package:devlabsflutter_1/screens/home/task.dart';
+import 'package:devlabsflutter_1/screens/home/task_provider.dart';
+import 'package:provider/provider.dart';
+
 
 
 class new_task_pop_up extends StatefulWidget {
@@ -11,12 +14,21 @@ class new_task_pop_up extends StatefulWidget {
 }
 
 class _new_task_pop_upState extends State<new_task_pop_up> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String selectedStatus = 'To Do';
 
   List<String> statusOptions = ['To Do', 'In Progress', 'Done'];
   @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: SizedBox(
           width: double.infinity,
@@ -47,7 +59,15 @@ class _new_task_pop_upState extends State<new_task_pop_up> {
                   ),
                 ),
                 SizedBox(height: 6,),
-                text_input_fields(label: "Enter Title"),
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    hintText: "Enter Title",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 19,),
                 Padding(
                   padding: const EdgeInsets.only(left: 7),
@@ -63,6 +83,7 @@ class _new_task_pop_upState extends State<new_task_pop_up> {
                 SizedBox(
                   height: 140,
                   child: TextField(
+                    controller: _descriptionController, 
                     maxLines: null,
                     expands: true,
                     textAlignVertical: TextAlignVertical.top,
@@ -121,7 +142,9 @@ class _new_task_pop_upState extends State<new_task_pop_up> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: TextButton(
-                        onPressed: () {}
+                        onPressed: () {
+                            Navigator.pop(context);
+                        }
                         ,
                         child: Text(
                           'Cancel',
@@ -141,9 +164,33 @@ class _new_task_pop_upState extends State<new_task_pop_up> {
                       child: TextButton(
                         
                         onPressed: () {
+
+                    final title = _titleController.text.  trim();
+                    final description = _descriptionController.text.trim();
+
+                    if (title.isEmpty || description.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Please fill in all fields')),
+                      );
+                      return;
+                    }
+
+                    final newTask = Task(
+                      title: title,
+                      description: description,
+                      status: selectedStatus,
+                      date: DateTime.now().toString().substring(0, 11),
+                    );
+
+                    // Add to provider
+                    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+                    taskProvider.addTask(newTask);
+
+                    Navigator.pop(context);
+
                         },
                         style: ButtonStyle(
-                          // backgroundColor: WidgetStatePropertyAll(Colors.blue),
+
                           
                         ),
                         child: Text(
